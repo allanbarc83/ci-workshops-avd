@@ -22,19 +22,19 @@ jobs:
       # - name: Setup Python
       #   uses: actions/setup-python@v6
 
-      # - name: Install Python requirements
-      #   run: pip3 install -r requirements.txt
+      - name: Install Python requirements
+        run: pip3 install -r requirements.txt
 
-      # - name: Run pre-commit on files
-      #   uses: pre-commit/action@v3.0.1
+      - name: Run pre-commit on files
+        uses: pre-commit/action@v3.0.1
 
-      # - name: Check paths for sites/site_1
-      #   uses: dorny/paths-filter@v3
-      #   id: filter-site1
-      #   with:
-      #     filters: |
-      #       workflows:
-      #         - 'labs/L2LS/sites/site_1/**'
+      - name: Check paths for sites/site_1
+        uses: dorny/paths-filter@v3
+        id: filter-site1
+        with:
+          filters: |
+            workflows:
+              - 'labs/CAMPUS_L2LS/sites/campus_a/**'
 
       # - name: Check paths for sites/site_2
       #   uses: dorny/paths-filter@v3
