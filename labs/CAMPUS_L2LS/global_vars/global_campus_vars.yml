@@ -45,7 +45,7 @@ aaa_settings:
       role: network-admin
       cleartext_password: "{{ ansible_password }}"
       # ssh_key: "{{ lookup('ansible.builtin.file', '~/.ssh/id_rsa.pub') }}"
-      ssh_key: "{{ lookup('ansible.builtin.file', '~/.ssh/id_rsa.pub', errors='ignore') | default(omit) }}
+      ssh_key: "{{ lookup('ansible.builtin.file', '~/.ssh/id_rsa.pub', errors='ignore') | default(omit) }}""
 
 # DNS settings
 dns_settings:
