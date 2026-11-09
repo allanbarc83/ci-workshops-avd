@@ -28,13 +28,13 @@ jobs:
       - name: Run pre-commit on files
         uses: pre-commit/action@v3.0.1
 
-      # - name: Check paths for sites/campus_a
-      #   uses: dorny/paths-filter@v3
-      #   id: filter-campus_a
-      #   with:
-      #     filters: |
-      #       workflows:
-      #        - 'labs/CAMPUS_L2LS/sites/campus_a/**'
+      - name: Check paths for sites/campus_a
+        uses: dorny/paths-filter@v3
+        id: filter-campus_a
+        with:
+          filters: |
+            workflows:
+             - 'labs/CAMPUS_L2LS/sites/campus_a/**'
 
       # - name: Check paths for sites/site_2
       #   uses: dorny/paths-filter@v3
