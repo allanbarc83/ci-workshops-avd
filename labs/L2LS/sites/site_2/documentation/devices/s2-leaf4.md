@@ -15,7 +15,6 @@
   - [AAA Authorization](#aaa-authorization)
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
-  - [Logging](#logging)
 - [MLAG](#mlag)
   - [MLAG Summary](#mlag-summary)
   - [MLAG Device Configuration](#mlag-device-configuration)
@@ -177,7 +176,6 @@ management api http-commands
 ```eos
 !
 username arista privilege 15 role network-admin secret sha512 <removed>
-username arista ssh-key ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCSzQHRi6/AuRWGhcOI9axmXDg3KOyS3bPSPO6jvX4QEDds6LUaua7gKVzwujNyGC63s1RAM0I4XP6rkoGVDqRMDgzl1tL9N3Ug3P9NiH1NNpWZdPmqbp+EqPodDZG1sgzrAXCrWXGBFd86t/PrFp2R+SAxDzMA1zUaTt/dAkj+ouZ+p2AxI3EA7eP4vXQqFLWX0SnBD/9lLBSgcoILYgFtFEGi/2H5HMeHltBTwFwv3o1it3RnbIb0lB9abZBP8jiITCbqKyJ2witTVSeGZ3KzsTZ8sjEbe3waiZZdvi3GaNXv/IB5aC1eoaHjy2lk3hwQSfdff1fF+DiF3LrQ7s11 arista@avd-workshop-1-73ce2af1-eos
 ```
 
 ### Enable Password
@@ -218,31 +216,6 @@ aaa authorization exec default local
 daemon TerminAttr
    exec /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=token,/tmp/token -cvvrf=default -disableaaa -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -taillogs -cvsourceintf=Management0
    no shutdown
-```
-
-### Logging
-
-#### Logging Servers and Features Summary
-
-| Type | Level |
-| ---- | ----- |
-
-| VRF | Source Interface |
-| --- | ---------------- |
-| default | Management0 |
-
-| VRF | Hosts | Ports | Protocol | SSL-profile |
-| --- | ----- | ----- | -------- | ----------- |
-| default | 10.200.0.108 | Default | UDP | - |
-| default | 10.200.1.108 | Default | UDP | - |
-
-#### Logging Servers and Features Device Configuration
-
-```eos
-!
-logging host 10.200.0.108
-logging host 10.200.1.108
-logging source-interface Management0
 ```
 
 ## MLAG

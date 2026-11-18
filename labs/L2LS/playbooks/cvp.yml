@@ -10,3 +10,4 @@
         name: arista.avd.cv_deploy
       vars:
         cv_run_change_control: true
+        cv_server: "cicd-workshop-1-cfb44425-eos.topo.testdrive.arista.com"
