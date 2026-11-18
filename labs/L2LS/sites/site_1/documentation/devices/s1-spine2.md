@@ -59,9 +59,9 @@
 
 ##### IPv6
 
-| Management Interface | Description | Type | VRF | IPv6 Address | IPv6 Gateway | ND RA RX Accept | ND RA Disabled | ND Managed Config Flag |
-| -------------------- | ----------- | ---- | --- | ------------ | ------------ | --------------- | -------------- | ---------------------- |
-| Management0 | OOB_MANAGEMENT | oob | default | - | - | - | - | - |
+| Management Interface | Description | Type | VRF | IPv6 Address | IPv6 Gateway | ND RA Disabled | ND RA RX Accept | ND Managed Config Flag | ND Other Config Flag | ND Cache | ND RA DNS Servers |
+| -------------------- | ----------- | ---- | --- | ------------ | ------------ | -------------- | --------------- | ---------------------- | -------------------- | -------- | ----------------- |
+| Management0 | OOB_MANAGEMENT | oob | default | - | - | - | - | - | - | - | - |
 
 #### Management Interfaces Device Configuration
 
@@ -126,9 +126,9 @@ ip domain lookup source-interface Management0
 
 NTP servers VRF: default
 
-| Server | Preferred | Burst | iBurst | Version | Min Poll | Max Poll | Local-interface | Key |
-| ------ | --------- | ----- | ------ | ------- | -------- | -------- | --------------- | --- |
-| 192.168.0.1 | True | - | True | - | - | - | - | - |
+| Server | Preferred | Burst | iBurst | Version | Min Poll | Max Poll | Local-interface | Source Address | Key |
+| ------ | --------- | ----- | ------ | ------- | -------- | -------- | --------------- | -------------- | --- |
+| 192.168.0.1 | True | - | True | - | - | - | - | - | - |
 
 #### NTP Device Configuration
 
@@ -208,9 +208,9 @@ aaa authorization exec default local
 
 #### TerminAttr Daemon Summary
 
-| CV Compression | CloudVision Servers | VRF | Authentication | Smash Excludes | Ingest Exclude | Bypass AAA |
-| -------------- | ------------------- | --- | -------------- | -------------- | -------------- | ---------- |
-| gzip | 192.168.0.5:9910 | default | token,/tmp/token | ale,flexCounter,hardware,kni,pulse,strata | - | True |
+| CV Compression | CloudVision Servers | VRF | Authentication | Smash Excludes | Sysdb Excludes | Ingest Exclude | Bypass AAA |
+| -------------- | ------------------- | --- | -------------- | -------------- | -------------- | -------------- | ---------- |
+| gzip | 192.168.0.5:9910 | default | token,/tmp/token | ale,flexCounter,hardware,kni,pulse,strata | - | - | True |
 
 #### TerminAttr Daemon Device Configuration
 
@@ -290,6 +290,7 @@ vlan internal order ascending range 1006 1199
 | ------- | ---- | ------------ |
 | 10 | Ten | - |
 | 20 | Twenty | - |
+| 30 | Thirdy | - |
 | 4093 | MLAG_L3 | MLAG |
 | 4094 | MLAG | MLAG |
 
@@ -302,6 +303,9 @@ vlan 10
 !
 vlan 20
    name Twenty
+!
+vlan 30
+   name Thirdy
 !
 vlan 4093
    name MLAG_L3
@@ -466,6 +470,7 @@ interface Loopback0
 | --------- | ----------- | --- | --- | -------- |
 | Vlan10 | Ten | default | - | False |
 | Vlan20 | Twenty | default | - | False |
+| Vlan30 | Thirdy | default | - | False |
 | Vlan4093 | MLAG_L3 | default | 1500 | False |
 | Vlan4094 | MLAG | default | 1500 | False |
 
@@ -475,14 +480,15 @@ interface Loopback0
 | --------- | --- | ---------- | ------------------ | ------------------------- | ------ | ------- |
 | Vlan10 | default | 10.10.10.3/24 | - | 10.10.10.1 | - | - |
 | Vlan20 | default | 10.20.20.3/24 | - | 10.20.20.1 | - | - |
+| Vlan30 | default | 10.30.30.3/24 | - | 10.30.30.1 | - | - |
 | Vlan4093 | default | 10.1.253.3/31 | - | - | - | - |
 | Vlan4094 | default | 10.1.253.1/31 | - | - | - | - |
 
 ##### OSPF
 
-| Interface | OSPF Network Point to Point | OSPF Area | OSPF Cost | OSPF Authentication | IPv6 OSPF Process ID | IPv6 OSPF Area | IPv6 OSPF Network Point to Point |
-| --------- | --------------------------- | --------- | --------- | ------------------- | -------------------- | -------------- | -------------------------------- |
-| Vlan4093 | True | 0.0.0.0 | - | - | - | - | - |
+| Interface | OSPF Network Point to Point | OSPF Area | OSPF Cost | OSPF Authentication |
+| --------- | --------------------------- | --------- | --------- | ------------------- |
+| Vlan4093 | True | 0.0.0.0 | - | - |
 
 #### VLAN Interfaces Device Configuration
 
@@ -499,6 +505,12 @@ interface Vlan20
    no shutdown
    ip address 10.20.20.3/24
    ip virtual-router address 10.20.20.1
+!
+interface Vlan30
+   description Thirdy
+   no shutdown
+   ip address 10.30.30.3/24
+   ip virtual-router address 10.30.30.1
 !
 interface Vlan4093
    description MLAG_L3
@@ -562,7 +574,7 @@ ip routing
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | False |
-| default | false |
+| default | False |
 
 ### Static Routes
 
